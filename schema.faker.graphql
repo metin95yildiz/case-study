@@ -1,0 +1,16 @@
+
+type Employee {
+  id: ID!
+  firstName: String! @fake(type: firstName, locale: en_US)
+  lastName: String! @fake(type: lastName, locale: en_US)
+  image: String @fake(type: imageUrl, options: { imageKeywords: "person-profile" })
+  jobTitle: String! @fake(type: jobTitle)
+  address: String! @fake(type: streetAddress, options: { useFullAddress: true })
+  emailAddress: String! @fake(type: email)
+  phoneNumber: String! @fake(type: phoneNumber)
+  numberOfVotes: Int @fake(type: number)
+}
+
+type Query {
+  employees(id: ID): [Employee!] @listLength(min: 5, max: 12)
+}
