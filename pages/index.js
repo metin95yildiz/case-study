@@ -1,5 +1,4 @@
-import Image from "next/image";
-import "../styles/Home.module.scss";
+import React from "react";
 import EmployeeList from '../components/EmployeeList';
 
 export default function Home() {
@@ -9,13 +8,14 @@ export default function Home() {
         <h2 className="company-name">Umbrella Group</h2>
       </header>
       <main className="main">
+        <h1>Our Employees</h1>
         <EmployeeList />
       </main>
 
       <footer className="footer">
           Copyright ©{' '}
-          <span className="logo">
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+          <span className="company-name">
+              Umbrella Group
           </span>
       </footer>
     </div>
