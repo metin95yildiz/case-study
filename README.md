@@ -10,10 +10,10 @@ yarn next
 
 ## Dependencies
 
-Next.js
-React.js
-Redux
-Sass
+* Next.js
+* React.js
+* Redux
+* Sass
 
 
 ## Demo
