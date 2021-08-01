@@ -2,13 +2,24 @@ $font-stack: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
 Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 $color-primary: rgb(100, 248, 14);
 $border-color: #eaeaea;
+$font-color: white;
+$vote-button-color: darkgreen;
+$mobile-width: 560px;
 
 %html-body-shared {
     padding: 0;
   margin: 0;
   font-family: $font-stack
 }
+@mixin breakpoint($point) {
+  @if $point == desktop {
+    @media (min-width: $mobile-width) { @content ; }
+ }
+ @else if $point == mobile {
+    @media (max-width: $mobile-width)  { @content ; }
 
+ }
+}
 html,
 body {
   @extend %html-body-shared;
@@ -26,10 +37,6 @@ a {
 .container {
   min-height: 100vh;
   padding: 0 0.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   height: 100vh;
 }
 
@@ -43,14 +50,31 @@ a {
 }
 
 .header {
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100px;
+  position: fixed;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid $border-color;
+  background-color: $font-color;
+  z-index: 1;
   .company-name {
       color: $color-primary;
+      font-weight: 900;
+  }
+  .return-to-list {
+    padding: 8px;
+    font-weight: 500;
+    border: 2px solid $border-color;
+    border-radius: 8px;
+    transition: font-size linear 0.2s;
+    &:hover {
+      font-weight: 700;
+      font-size: 18px;
+    }
   }
 }
 .footer {
@@ -60,6 +84,9 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+  @include breakpoint(mobile){
+    white-space: pre-wrap;
+  }
 }
 .employees {
   text-align: center;
@@ -69,13 +96,26 @@ a {
     line-height: 48px;
     border: 2px solid $border-color;
     border-radius: 16px;
+    margin-top: 1rem;
+    transition: border linear 0.2s,
+    padding linear 0.2s;
     a {
       display: grid;
       grid-template-areas:
       "img name-surname vote-button"
-      "img jobtitle vote-button";
+      "img job-title vote-button";
       grid-template-rows: 1fr 1fr;
-      grid-template-columns: 72px 600px 80px; 
+      grid-template-columns: 300px 600px 80px; 
+      height: 200px;
+      @include breakpoint(mobile){
+        grid-template-areas:
+        "img name-surname name-surname"
+        "img job-title job-title"
+        "img vote-button vote-button";
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-columns: 150px 200px 80px;
+        height: 180px;
+      }
     }
     .bold {
       font-weight: 700;
@@ -87,25 +127,44 @@ a {
     .name-surname {
       grid-area: name-surname;
       white-space: nowrap;
+
     }
     .job-title {
-      grid-area: jobtitle;
+      grid-area: job-title;
       white-space: nowrap;
+      @include breakpoint(mobile){
+        white-space: pre-wrap;
+      }
     }
     .vote-button {
       grid-area: vote-button;
       width: 80px;
       height: 48px;
       border-radius: 8px;
-      background-color: darkgreen;
-      color: white;
+      background-color: $vote-button-color;
+      color: $font-color;
       align-self: center;
+      transition: background-color linear 0.2s,
+      font-size linear 0.2s;
+      @include breakpoint(mobile){
+        justify-self: center;
+      }
+      &:hover {
+        background-color: $color-primary;
+        font-size: 18px;
+      }
+    }
+
+    &:hover {
+      padding: 18px;
+      border: 4px solid $border-color;
     }
   }
 }
 .employee-details {
   display: flex;
   flex-direction: column;
+  margin-top: 48px;
   padding: 64px;
   line-height: 48px;
   border: 2px solid $border-color;
@@ -118,35 +177,11 @@ a {
     font-weight: 700;
   }
   .image {
-    height: 180px;
+    height: 260px;
   }
   .name,
   .surname,
   .job-title {
     white-space: nowrap;
-  }
-}
-.title {
-  margin: 0;
-  line-height: 1.15;
-  font-size: 4rem;
-  text-align: center;
-  a {
-    color: #0070f3;
-    text-decoration: none;
-  }
-
-  &:hover,
-  &:focus,
-  &:active {
-    text-decoration: underline;
-  }
-}
-
-
-@media (max-width: 600px) {
-  .grid {
-    width: 100%;
-    flex-direction: column;
   }
 }
