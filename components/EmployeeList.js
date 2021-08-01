@@ -1,22 +1,42 @@
 import React from "react";
-import Link from "next/link"
+import Link from "next/link";
+import { useSelector, useDispatch } from "react-redux";
+import { voteEmployee } from "../store/actions";
+import Image from "next/image";
 
 export default function EmployeeList() {
-    function voteEmployee(event) {
+    const employees = useSelector((state) => state.employees);
+    const dispatch = useDispatch();
+    function vote(event, employee) {
         event.preventDefault();
+        dispatch(voteEmployee(Object.values(employees).indexOf(employee)));
     }
+
     return (
         <ul className="employees">
-            <li className="employee">
-            <Link href="/employeeDetails/">
-                <a>
-                    <div className="image"></div>
-                    <div className="name-surname"><span className="bold">Name: </span>Martin - <span className="bold">Surname</span>: Shaw</div>
-                    <div className="job-title"><span className="bold">Job Title:</span> Engineer</div>
-                    <button className="vote-button" onClick={voteEmployee}>Vote!</button>
-                </a>
-                </Link>
-            </li>
+            {
+                Object.values(employees).sort((a, b) => b.numberOfVotes - a.numberOfVotes).map((employee) => {
+                    return (
+                        <li key={employee.id} className="employee">
+                        <Link href={`/employeeDetails/${employee.id}`}>
+                            <a>
+                                <div className="image">
+                                    <Image src={`${employee.image}-${employee.id}`} height={200} width={250} alt="Picture" />
+                                </div>
+                                <div className="name-surname">
+                                    <span className="bold">Name: </span>{employee.firstName} -{" "}
+                                    <span className="bold">Surname</span>: {employee.lastName}
+                                </div>
+                                <div className="job-title"><span className="bold">Job Title:</span> {employee.jobTitle}</div>
+                                <button className="vote-button" onClick={(event) => vote(event, employee)}>
+                                    Vote
+                                </button>
+                            </a>
+                            </Link>
+                        </li>
+                    )
+                })
+            }
         </ul>
     );
 }
