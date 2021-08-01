@@ -184,6 +184,11 @@ a {
   border: 2px solid $border-color;
   border-radius: 6px;
   width: 560px;
+  @include breakpoint(mobile){
+    margin-left: 62px;
+    padding: 64px;
+    width: 490px;
+  }
   * {
     margin-left: 38px;
   }
@@ -192,6 +197,9 @@ a {
   }
   .image {
     height: 260px;
+    @include breakpoint(mobile){
+      height: 240px;
+    }
   }
   .name,
   .surname,
