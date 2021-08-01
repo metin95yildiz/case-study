@@ -1,5 +1,5 @@
 import React from "react";
-import Document, { Html, Head, Main, NextScript } from "next/document"
+import Document, { Html, Head, Main, NextScript } from "next/document";
 
 class MyDocument extends Document {
     static async getInitialProps(ctx) {
@@ -9,11 +9,7 @@ class MyDocument extends Document {
     render() {
         return (
             <Html>
-                <Head>
-                    <title>Umbrella Group</title>
-                    <meta name="description" content="Our business is life itself" />
-                    <link rel="icon" href="/favicon.ico" />
-                </Head>
+                <Head />
                 <body>
                     <Main />
                     <NextScript />
