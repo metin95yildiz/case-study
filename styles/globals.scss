@@ -5,6 +5,7 @@ $border-color: #eaeaea;
 $font-color: white;
 $vote-button-color: darkgreen;
 $mobile-width: 560px;
+$tablet-width: 820px;
 
 %html-body-shared {
     padding: 0;
@@ -13,8 +14,12 @@ $mobile-width: 560px;
 }
 @mixin breakpoint($point) {
   @if $point == desktop {
-    @media (min-width: $mobile-width) { @content ; }
+    @media (min-width: $tablet-width) { @content ; }
  }
+ @else if $point == tablet {
+  @media (max-width: $tablet-width)  { @content ; }
+
+}
  @else if $point == mobile {
     @media (max-width: $mobile-width)  { @content ; }
 
@@ -86,6 +91,7 @@ a {
   align-items: center;
   @include breakpoint(mobile){
     white-space: pre-wrap;
+    width: 120%;
   }
 }
 .employees {
@@ -107,6 +113,14 @@ a {
       grid-template-rows: 1fr 1fr;
       grid-template-columns: 300px 600px 80px; 
       height: 200px;
+      @include breakpoint(tablet){
+        grid-template-areas:
+        "img name-surname vote-button"
+        "img job-title vote-button";
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 200px 500px 80px; 
+        height: 180px;
+      }
       @include breakpoint(mobile){
         grid-template-areas:
         "img name-surname name-surname"
